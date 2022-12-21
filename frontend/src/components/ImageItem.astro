@@ -1,0 +1,101 @@
+---
+export interface Props {
+    id: string,
+    src?: string,
+
+}
+// src='https://via.placeholder.com/200X300?text='
+
+const {id = id, src=''} = Astro.props;
+---
+    <>
+        <div class='secondary_movie' id={`item_${id}`}>
+            <div class="item_list">
+            <!-- <div class="lds-ripple"><div></div><div></div></div> -->
+            <img src={`${src}${id}`}  id={`image_item_${id}`} alt="" class='movie' data-id='unset'>
+            </div>
+        </div>
+    </>
+
+<style>
+
+    .secondary_movie {
+        display: flex;
+        flex-direction:column;
+        transform: translateX(calc(var(--slider-index) * -100%));
+    }
+
+    .secondary_movie  > h5{
+        color: #fff;
+        font-family: 'K2D', serif;
+        font-style: normal;
+        font-weight: 200;
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .item_list > img {
+        width: 100%;
+        border-radius: 4px;
+        height: auto;
+        
+        }
+    .item_list {
+        padding: 0 .3rem 0 0;
+        width: 150px;
+        height: 225px;
+        
+    }
+
+    .movie {
+        cursor: pointer;
+    }
+
+    .lds-ripple {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+    .lds-ripple div {
+        position: absolute;
+        border: 4px solid #fff;
+        opacity: 1;
+        border-radius: 50%;
+        animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+    .lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+    }
+    @keyframes lds-ripple {
+    0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+    4.9% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+    5% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+    100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+    }
+    }
+
+</style>

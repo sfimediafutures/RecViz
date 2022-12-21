@@ -1,0 +1,56 @@
+:root {
+    --link-gradient2: linear-gradient(45deg, #4F39FA, #DA62C4 5%, var(--color-border) 10%);
+    --link-gradient: linear-gradient(45deg, #F1F1F1, #221f20 5%, var(--color-border) 10%);
+}
+
+.likard > .likard-cont > .forms {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    padding-right: 1rem;
+    }
+
+.likard > .likard-cont > div > form > span {
+    padding-left: 4rem;
+    display: inline-block;
+}
+
+.likard > .likard-cont > div > form > span > input {		
+    border: 0px;
+    height: 1rem;
+    width: 100%;
+}
+
+.likard > .likard-cont > form > span > label{
+    padding-left: 1rem;
+}
+
+
+.likard > .likard-cont > a{		
+    text-decoration: none;
+    line-height: 1.4;
+    color: var(--text-color);		
+}
+
+h2 {
+    margin: 0;
+    transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    display: inline-block;
+    
+}
+
+p {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+}
+
+
+.likard:is(:hover, :focus-within) {
+    background-position: 0;
+}
+
+.likard:is(:hover, :focus-within) h2 {
+    color: #221f20;
+    transform: translateX(2px);
+}
+

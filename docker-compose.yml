@@ -1,0 +1,107 @@
+version: '3'
+ 
+services:
+  web:
+    container_name: DJANGO
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/web:/web
+      - ./backend/data:/data
+      - ./backend/static:/static
+
+    environment:
+      - DB_HOST=db
+      - DB_NAME=web
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+      - TMDB_KEY=${TMDB_KEY}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+    networks:
+      - django_network
+    depends_on:
+      - db 
+  
+    command: >
+          sh -c "
+          python3 manage.py wait_for_db &&
+          python3 manage.py makemigrations &&
+          python3 manage.py migrate &&
+          python3 manage.py collectstatic --no-input &&
+          gunicorn web.wsgi --bind 0.0.0.0:8000"
+    
+  db:
+    container_name: DB
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=web
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=supersecretpassword
+    ports:
+      - "5432:5432"
+    networks:
+      - django_network
+
+  redis:
+    container_name: REDIS
+    image: redis:alpine
+    networks:
+      - django_network
+  
+  celery:
+    container_name: CELERY
+    restart: always
+    build:
+      context: ./backend
+    command: celery -A web.celery worker -l INFO
+    volumes:
+      - ./backend/web:/web
+      - ./backend/data:/data
+    environment:
+      - DB_HOST=db
+      - DB_NAME=web
+      - DB_USER=postgres
+      - DB_PASS=supersecretpassword
+      - TMDB_KEY=${TMDB_KEY}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_DEBUG=${DJANGO_DEBUG}
+    networks:
+      - django_network
+
+    depends_on:
+      - db
+      - redis
+      - web
+  nginx:
+    container_name: NGINX
+    image: nginx
+    volumes:
+      - ./backend/static:/static
+      - ./frontend/disc:/src
+      - ./backend/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - django_network
+    depends_on:
+      - web
+
+  #astro:
+  #  build: 
+  #    context: ./frontend
+  #  volumes:
+  #        - ./frontend/src:/app/src/
+  #        - ./frontend/public:/app/public/
+  #        - ./frontend/package.json:/app/package.json
+  #        - ./frontend/package-lock.json:/app/package-lock.json
+  #  networks:
+  #  - django_network
+  #  ports:
+  #    - 3000:3000
+
+networks:
+  django_network:
+    driver: bridge
