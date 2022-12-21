@@ -56,11 +56,11 @@ class Movie_list(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['^title']
 
-class Movie_random_list(generics.ListAPIView):
-    seq = Movies.objects.all()
-    if seq: queryset = random.choices(seq, k=5) 
-    else: queryset = []
-    serializer_class = MovieSerializer  
+# class Movie_random_list(generics.ListAPIView):
+#     seq = Movies.objects.all()
+#     if seq: queryset = random.choices(seq, k=5) 
+#     else: queryset = []
+#     serializer_class = MovieSerializer  
 
 class Recommendation(APIView):
     def get_object(self, pk, tk):
@@ -153,47 +153,47 @@ def movie_get_image(request,pk, format=None):
     return Response(response.json())
 
 
-@api_view(['GET'])
-def movie_random_new(request, format=None):
-    n = Movies.objects.values_list('movieId',flat = True)
-    pick = random.choices(n, k=5)
+# @api_view(['GET'])
+# def movie_random_new(request, format=None):
+#     n = Movies.objects.values_list('movieId',flat = True)
+#     pick = random.choices(n, k=5)
 
-    try:
-        result = []
-        for movie in pick:
-            result.append(Movies.objects.get(movieId = movie))
-        serializer = MovieSerializer(result, many=True)
-        return Response(serializer.data)
-    except Movies.DoesNotExist:
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+#     try:
+#         result = []
+#         for movie in pick:
+#             result.append(Movies.objects.get(movieId = movie))
+#         serializer = MovieSerializer(result, many=True)
+#         return Response(serializer.data)
+#     except Movies.DoesNotExist:
+#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
 
 # Some of the viewmodels i want to do more custom
-@api_view(['GET'])
-def movie_random(request, format=None):
-    n = Movies.objects.values_list('movieId',)
-    pick = random.choice(n)
-    try:
-        result = Movies.objects.get(movieId = pick)
-        serializer = MovieSerializer(result)
-        return Response(serializer.data)
-    except Movies.DoesNotExist:
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+# @api_view(['GET'])
+# def movie_random(request, format=None):
+#     n = Movies.objects.values_list('movieId',)
+#     pick = random.choice(n)
+#     try:
+#         result = Movies.objects.get(movieId = pick)
+#         serializer = MovieSerializer(result)
+#         return Response(serializer.data)
+#     except Movies.DoesNotExist:
+#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['GET'])
-def movie_random_image(request, format=None):
-    n = Movies.objects.values_list('movieId',flat = True)
-    pick = random.choice(n)
-    try:
-        result = Movies.objects.get(movieId = pick)
-        link = 'https://image.tmdb.org/t/p/w500/m9v9m21TZxvnSjppposZcgDNZeG.jpg'
-        serializer = MovieSerializerImage(result)
+# @api_view(['GET'])
+# def movie_random_image(request, format=None):
+#     n = Movies.objects.values_list('movieId',flat = True)
+#     pick = random.choice(n)
+#     try:
+#         result = Movies.objects.get(movieId = pick)
+#         link = 'https://image.tmdb.org/t/p/w500/m9v9m21TZxvnSjppposZcgDNZeG.jpg'
+#         serializer = MovieSerializerImage(result)
 
-        with urlopen(url='https://api.themoviedb.org/3/movie/343611?api_key='+TMDB_KEY) as response:
-            movie_details = response.read()
+#         with urlopen(url='https://api.themoviedb.org/3/movie/343611?api_key='+TMDB_KEY) as response:
+#             movie_details = response.read()
         
-        return Response(serializer.data)
+#         return Response(serializer.data)
 
-    except Movies.DoesNotExist:
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+#     except Movies.DoesNotExist:
+#         return HttpResponse(status=status.HTTP_404_NOT_FOUND)

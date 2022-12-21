@@ -420,3 +420,4 @@ config.py
 backend/.DS_Store
 
 .env
+backend/web/handler/migrations/*

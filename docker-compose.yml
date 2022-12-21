@@ -28,6 +28,7 @@ services:
     command: >
           sh -c "
           python3 manage.py wait_for_db &&
+          python3 manage.py makemigrations handler &&
           python3 manage.py makemigrations &&
           python3 manage.py migrate &&
           python3 manage.py collectstatic --no-input &&
@@ -80,7 +81,7 @@ services:
     image: nginx
     volumes:
       - ./backend/static:/static
-      - ./frontend/disc:/src
+      - ./frontend/dist:/var/www/html
       - ./backend/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80

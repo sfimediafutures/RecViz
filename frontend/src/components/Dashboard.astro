@@ -9,7 +9,8 @@ let n_rec: Array<number>
 n_rec = []
 Array.from({ length: n }, (x, i) => {n_rec.push(i)})
 
-
+import settings from '../../config.json'
+const {url=settings.API_SERVER_URL} = Astro.props;
 ---
 <section class="content" id='content'>
     <div class="content_info">
@@ -354,7 +355,7 @@ Array.from({ length: n }, (x, i) => {n_rec.push(i)})
     }
 </style>
 
-<script type="module" is:inline defer>
+<script type="module" is:inline defer define:vars={{url}}>
     // ======================= API CALLS =======================
 	async function getData(url) {
 		const response = await fetch(url)
@@ -362,13 +363,13 @@ Array.from({ length: n }, (x, i) => {n_rec.push(i)})
 	}
 
     async function getImageFromSource(tmdbId){
-        const f = await fetch(`http://0.0.0.0/api/movies/image/${tmdbId}`)
+        const f = await fetch(`${url}/api/movies/image/${tmdbId}`)
         const j = await f.json()
         return j;
     }
 
     async function getPosters(user, section, rec) {
-        const data = await getData(`http://0.0.0.0:8000/api/recommendation/${user}/${rec}`)
+        const data = await getData(`${url}/api/recommendation/${user}/${rec}`)
         await Promise.all(data.movies.map(async (element, index) => {
             const top20 = document.getElementById(section)
             const item = top20.querySelector(`#image_item_${index}`)
@@ -422,7 +423,7 @@ Array.from({ length: n }, (x, i) => {n_rec.push(i)})
         // Set elemets
         primary_image.src = `https://image.tmdb.org/t/p/w200${data.poster_path}`
 
-        //title.textContent = `${data.Title} (${data.Released})`
+        // title.textContent = `${data.Title} (${data.Released})`
         main_image.src = `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
         title.textContent = `${data.original_title}`
         bodytext.textContent = data.overview
@@ -450,11 +451,6 @@ Array.from({ length: n }, (x, i) => {n_rec.push(i)})
             main_img.style.background = "#181818"
             
         }, 200)
-
-        
-
-
-        
         
     }
     // ========================= LOGIC ==========================
