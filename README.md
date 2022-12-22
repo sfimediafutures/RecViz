@@ -25,6 +25,17 @@ https://files.grouplens.org/datasets/movielens/ml-25m.zip and then unzip the fol
 
 ```
 
+### Enviournment Variables:
+In the **root** of the project, add a .env file, and add the following lines:
+
+You'll need a TMDB API key for this project to run, you can find information about this here:
+https://developers.themoviedb.org/3/getting-started/introduction
+```bash
+TMDB_KEY=''
+DJANGO_SECRET_KEY=''
+DJANGO_DEBUG=True
+```
+
 ### Backend Cold start:
 **Step 1:**
 From the root of the folder, run `docker-compose up --build`
@@ -64,3 +75,7 @@ from `/frontend` folder, run `npm install`
 run: `npm run dev`
 
 have fun!
+
+
+#### Developers note:
+At the current iteration of this Demo, images are slow to load, this is simply due to how 
