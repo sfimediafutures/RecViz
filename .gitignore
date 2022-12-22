@@ -421,3 +421,10 @@ backend/.DS_Store
 
 .env
 backend/web/handler/migrations/*
+
+# Exclude in ignore
+!backend/data/submissions/*
+!backend/data/recommendations
+!backend/data/recommendations/all_recs_and_rerank_2.json
+!backend/data/recommendations/users.json
+!backend/data/recommendations/all_recs_and_rerank.json

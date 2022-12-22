@@ -1,4 +1,21 @@
+## Personalized Reranker Demo
+### About
+This demo is aimed at demonstrating how a personalized approach can be utilized to adjust the recommendation popularity to the preference of each particular user. Two example users have been selected - one has strong affinity towards "mainstream" and highly popular movies, while the other one is gravitating more towards less popular and niche movies. Traditionally popularity bias mitigation approaches have been exposing every user to less popular items in the same manner to promote less known content. This approach, however, takes into consideration every viewer's watching history attempting to gauge their interest towards popular/unpopular movies and only adjust the recommendation accordingly. Since classic recommender systems are known for recommending mostly popular items to every user, the reranker is expected to have less influence on popularity-aligned users, while the strongest changes are predicted to be observed in the recommendation for the niche items. The algorithm will attempt to lower the general popularity of recommended items, while still retaining an acceptable relevance and accuracy. Note: The users with extremely niche preferences are unfortunately practically treated as outliers - the algorithm has a hard time of finding highly relevant niche items to safely recommend without a significant loss in accuracy.
+
+This Demo is based on the research of PHD Candidate Anastasiia Klimashevskaia @ SFI MediaFutures, UIB, who provided the recommendations and recommender system, and Developed by Research Assistant Snorre Alvsvåg @ SFI MediaFutures, UIB, who provided the full stack application. 
+
+### contact: 
+**Anastasiia Klimashevskaia** \
+PHD, SFI MediaFutures, University of Bergen \
+anastasiia.klimashevskaia@uib.no
+
+**Snorre Alvsvåg** \
+Research Assistant, SFI MediaFutures, University of Bergen \
+snorre.alvsvag@uib.no
+
 ## Setup Guide for Demo:
+Following is a guide on how to setup this Demo 
+
 
 ### Data for demo:
 To download the necesarry datasets into the repo follow the following steps:
@@ -78,4 +95,8 @@ have fun!
 
 
 #### Developers note:
-At the current iteration of this Demo, images are slow to load, this is simply due to how 
+At the current iteration of this Demo, images are slow to load, this is simply due to how we find our posters. This is currently a slow process of multiple 
+
+
+#### Acknowledgements:
+We utilize TMDB API calls for all images in this DEMO and thank TMDB for issuing their API, read more about them here: https://www.themoviedb.org/about
