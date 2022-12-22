@@ -415,7 +415,7 @@ config.py
 
 
 # Data
-/backend/data
+backend/data/*
 .DS_Store
 backend/.DS_Store
 

@@ -1,0 +1,64 @@
+[
+    {
+        "userId":"123123",
+        "recommendations": {
+          "original": {
+            "movieIds": [
+              [123, 1],
+              [412, 2],
+              [2, 3],
+              [12,4]
+            ]
+          },
+          "SVD": {
+            "movieIds": [
+              123,
+              412,
+              16,
+              32
+            ]
+          },
+          "SVD-Reranked": {
+            "movieIds": [
+              123,
+              412,
+              55,
+              11
+            ]
+          }
+        },
+        "user_description_short":"short story",
+        "user_description_long":"long story"
+    },
+  {
+    "recommendations": {
+      "original": {
+        "movieIds": [
+          6,
+          412,
+          512,
+          71
+        ]
+      },
+      "SVD": {
+        "movieIds": [
+          85,
+          412,
+          512,
+          71
+        ]
+      },
+      "SVD-Reranked": {
+        "movieIds": [
+          123,
+          412,
+          510,
+          11
+        ]
+      }
+    },
+    "userId": "4123215",
+    "user_description_long": "long story for second user",
+    "user_description_short": "short story for second user"
+  }
+]

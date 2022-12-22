@@ -95,7 +95,7 @@ have fun!
 
 
 #### Developers note:
-At the current iteration of this Demo, images are slow to load, this is simply due to how we find our posters. This is currently a slow process of multiple 
+At the current iteration of this Demo, images are slow to load, this is simply due to how we find our posters. This is currently a slow process of multiple fetch calls, as no poster nor poster links have been crawled and cached, and therefore results in live crawl and fetch for every movie.  
 
 
 #### Acknowledgements:
