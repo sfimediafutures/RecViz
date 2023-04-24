@@ -49,7 +49,7 @@ const {url=settings.API_SERVER_URL} = Astro.props;
     <div class="profile">
         <img src="/assets/mainstream.png" alt="">
     </div>
-        <p>Judging by the rating history, this person seems to prefer very popular mainstream movies. Clasically, such users are treated better by standard recommendation algorithms, maintaining the same popularity level of suggested movies to watch. Not much change in reranking is expected here - the recommendation list is supposedly already rather fitting.</p>
+        <p id="user-explanation-one" class="user-text-long">Judging by the rating history, this person seems to prefer very popular mainstream movies. Clasically, such users are treated better by standard recommendation algorithms, maintaining the same popularity level of suggested movies to watch. Not much change in reranking is expected here - the recommendation list is supposedly already rather fitting.</p>
     </div>
 </section>
 <h3 class='session_header'>What our mainstream user likes</h3>
@@ -81,7 +81,7 @@ const {url=settings.API_SERVER_URL} = Astro.props;
             <div class="profile">
                 <img src="/assets/niche.png" alt="">
             </div>
-                <p>This person is less fond of mainstream movies and potentially would not be satisfied with a standard recommendation with higher popularity. The reranking effect is expected to be more visible in such case, lowering the popularity level of recommended movies.</p>
+                <p id="user-explanation-two" class="user-text-long" >This person is less fond of mainstream movies and potentially would not be satisfied with a standard recommendation with higher popularity. The reranking effect is expected to be more visible in such case, lowering the popularity level of recommended movies.</p>
             </div>
     </section>
     
@@ -137,6 +137,9 @@ const {url=settings.API_SERVER_URL} = Astro.props;
 <div class='footer_main'>
     <img src="/assets/MF-LOGO-WHITE-2x.png" alt="">
     <h3>Demo brought to you by SFI MediaFutures</h3>
+    <p>
+        This product uses the TMDB API but is not endorsed or certified by TMDB
+    </p>
 </div>
 </section>
 
@@ -214,6 +217,11 @@ const {url=settings.API_SERVER_URL} = Astro.props;
 
     }
 
+    .user-text-long {
+        overflow: scroll;
+        min-height: 15rem;
+        max-height: 15rem;
+    }
 
     .expl_one_right > a > svg {
         scale: 1.5;
@@ -473,6 +481,12 @@ const {url=settings.API_SERVER_URL} = Astro.props;
     #third {
 
     }
+
+    @media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
 </style>
 
 <script type="module" is:inline defer define:vars={{url}}>
@@ -493,8 +507,12 @@ const {url=settings.API_SERVER_URL} = Astro.props;
         await Promise.all(data.movies.map(async (element, index) => {
             const top20 = document.getElementById(section)
             const item = top20.querySelector(`#image_item_${index}`)
+            if (element.cached_img_url == "not_cached") {
             const item_detail = await getImageFromSource(element.tmdbId)
-            item.src = `https://image.tmdb.org/t/p/w200/${item_detail.poster_path}`
+                item.src = `https://image.tmdb.org/t/p/w200/${item_detail.poster_path}`
+            } else {
+                item.src = `https://image.tmdb.org/t/p/w200${element.cached_img_url}`
+            }
             item.dataset.id = element.tmdbId
 		 }))
 
@@ -505,11 +523,13 @@ const {url=settings.API_SERVER_URL} = Astro.props;
 
     async function loadContent() {
         // User1 
+        const user_one_expl = document.getElementById('user-explanation-one')
         getPosters(user1, 'first', 'original')
         getPosters(user1, 'second', 'SVD')
         getPosters(user1, 'third', 'SVD-Reranked')
 
         // User2
+        const user_two_expl = document.getElementById('user-explanation-one')
         getPosters(user2, 'fourth', 'original')
         getPosters(user2, 'fifth', 'SVD')
         getPosters(user2, 'sixth', 'SVD-Reranked')

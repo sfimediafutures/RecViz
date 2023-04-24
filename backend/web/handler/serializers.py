@@ -41,6 +41,8 @@ class MovieSerializer(serializers.Serializer):
 class MovieRankedSerializer(serializers.Serializer):
     tmdbId = serializers.IntegerField()
     rank = serializers.IntegerField()
+    cached_img_url = serializers.CharField()
+    cached_background_img_url = serializers.CharField()
     movie = MovieSerializer()
 
 

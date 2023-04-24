@@ -27,7 +27,9 @@ class MoviesRanked(models.Model):
     movie = models.ForeignKey("handler.Movies", on_delete=models.CASCADE)
     tmdbId = models.IntegerField()
     rank = models.IntegerField()
-
+    cached_img_url = models.CharField(default='not_cached', max_length=400)
+    cached_background_img_url = models.CharField(default='not_cached', max_length=400)
+    
 class Movies(models.Model):
     movieId = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -77,8 +79,7 @@ class Recommendations(models.Model):
 
     def movies_default():
         return {"movies":["a","b","c"]}
-    
-    #movies = models.JSONField('Recommendation', default=movies_default)
+
     movies = models.ManyToManyField(MoviesRanked)
 
     user_description_short = models.CharField(default='', max_length=500)
